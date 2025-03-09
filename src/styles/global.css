@@ -1,0 +1,93 @@
+html {
+  color: var(--text);
+  background-image: var(--bg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+body {
+  font-size: var(--px-18);
+  padding-inline: var(--px-24);
+}
+
+main {
+  max-width: var(--width-container);
+  margin-inline: auto;
+}
+
+.truncate-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: var(--px-8) var(--px-12);
+  border: 2px solid var(--on-surface);
+  border-radius: var(--px-8);
+  transition: background-color 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background-color: var(--surface);
+  }
+}
+
+.btn:active {
+  background-color: var(--on-surface);
+}
+
+.styled-link {
+  color: var(--article-link);
+  transition: all 0.2s ease;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  -webkit-text-decoration-color: transparent;
+  -moz-text-decoration-color: transparent;
+}
+
+/* Hover states - Desktop only */
+@media (hover: hover) and (pointer: fine) {
+  .styled-link:hover,
+  .styled-link:focus {
+    color: var(--article-link-hover);
+    text-decoration-color: currentColor;
+    -webkit-text-decoration-color: currentColor;
+    -moz-text-decoration-color: currentColor;
+  }
+
+  .styled-link:visited:hover {
+    color: var(--article-link-visited-hover);
+  }
+
+  .styled-link:visited:focus {
+    color: var(--article-link-visited-hover);
+  }
+}
+
+@media (hover: none) {
+  .styled-link:hover {
+    color: var(--article-link);
+    text-decoration-color: transparent;
+  }
+}
+
+.styled-link:active {
+  color: var(--article-link-active);
+}
+
+.styled-link:visited {
+  color: var(--article-link-visited);
+}
+
+.styled-link:visited:active {
+  color: var(--article-link-visited-active);
+}

@@ -1,0 +1,46 @@
+---
+import { projects } from '@utils/getSortedPosts';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Card from '@components/Card.astro';
+---
+
+<BaseLayout>
+  <section class="intro">
+    <h1>Projects</h1>
+  </section>
+
+  <section class="posts">
+    {
+      projects.length > 0 ? (
+        <ul class="post-container">
+          {projects.map(({ data, id, collection }) => (
+            <li class="post-item">
+              <Card {data} {id} {collection} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="nothing-here">Nothing here yet.</div>
+      )
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    margin-bottom: var(--px-48);
+  }
+
+  h1 {
+    font-size: var(--px-24);
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  .post-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--px-20);
+    margin-bottom: 48px;
+  }
+</style>

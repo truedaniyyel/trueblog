@@ -1,0 +1,209 @@
+/* Base Article Typography */
+.article {
+  font-size: var(--text-lg);
+}
+
+/* Headings */
+.article :where(h1, h2, h3, h4, h5, h6) {
+  margin: var(--px-40) 0 var(--px-24);
+  font-weight: 650;
+  line-height: var(--leading-heading);
+  scroll-margin-top: 4em;
+}
+
+.article h1 {
+  font-size: clamp(
+    calc(var(--text-lg) * 1.75),
+    2.5vw + var(--text-lg),
+    calc(var(--text-lg) * 2.22222)
+  );
+}
+
+.article h2 {
+  font-size: clamp(
+    var(--text-lg),
+    2vw + var(--text-lg),
+    calc(var(--text-lg) * 1.5)
+  );
+}
+
+.article h3 {
+  font-size: clamp(
+    var(--text-lg),
+    1.5vw + var(--text-lg),
+    calc(var(--text-lg) * 1.25)
+  );
+}
+
+.article :where(h4, h5, h6) {
+  font-size: clamp(
+    var(--text-lg),
+    1vw + var(--text-lg),
+    calc(var(--text-lg) * 1.1)
+  );
+}
+
+/* Text Content */
+.article p {
+  margin-bottom: var(--px-20);
+}
+
+/* Links - Base styles using dark mode values */
+.article a {
+  color: var(--article-link);
+  transition: all 0.2s ease;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  -webkit-text-decoration-color: transparent;
+  -moz-text-decoration-color: transparent;
+}
+
+/* Hover states - Desktop only */
+@media (hover: hover) and (pointer: fine) {
+  .article a:hover,
+  .article a:focus {
+    color: var(--article-link-hover);
+    text-decoration-color: currentColor;
+    -webkit-text-decoration-color: currentColor;
+    -moz-text-decoration-color: currentColor;
+  }
+
+  .article a:visited:hover,
+  .article a:visited:focus {
+    color: var(--article-link-visited-hover);
+  }
+}
+
+/* Touch device states */
+@media (hover: none) {
+  /* Disable hover effects on touch */
+  .article a:hover {
+    color: var(--article-link);
+    text-decoration-color: transparent;
+  }
+}
+
+.article a:active {
+  color: var(--article-link-active);
+}
+
+.article a:visited {
+  color: var(--article-link-visited);
+}
+
+.article a:visited:active {
+  color: var(--article-link-visited-active);
+}
+
+/* Code Blocks */
+.article code {
+  font-size: 1em;
+  padding: 0 var(--px-4);
+}
+
+.article pre {
+  border-radius: var(--radius-on-surface);
+  padding: var(--px-16);
+  margin-bottom: var(--px-16);
+  overflow-x: auto !important;
+}
+
+/* Code Line Numbers */
+.article code {
+  counter-reset: line;
+  padding-left: 0;
+}
+
+.article span.line {
+  font-size: 1em !important;
+  line-height: normal;
+  font-family: var(--code-font) !important;
+}
+
+.article span.line:before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 1rem;
+  margin: 0 1.5rem 0 0.35rem;
+  color: rgba(255, 255, 255, 0.45);
+  direction: rtl;
+}
+
+.article span.line:last-child:is(:empty, :has(> span:empty:only-child)) {
+  display: none;
+}
+
+/* Code Blocks - Dark mode background for code */
+/* .article :where(.astro-code, .astro-code span) {
+  background-color: #24292e !important;
+} */
+
+/* Blockquotes - Using dark mode values */
+.article blockquote {
+  margin: var(--px-16) 0;
+  padding: 0 var(--px-16);
+  border-left: var(--px-4) solid;
+  color: #9393a5;
+}
+
+.article blockquote p {
+  padding: 0;
+  margin: 0;
+}
+
+/* Lists */
+.article :where(ul, ol) {
+  padding-left: var(--px-36);
+  margin-bottom: var(--px-20);
+  list-style-position: outside;
+}
+
+.article ul {
+  list-style-type: disc;
+}
+.article ol {
+  list-style-type: decimal;
+}
+
+.article li {
+  margin-bottom: var(--px-12);
+}
+
+.article :where(ul, ol) p {
+  margin-bottom: var(--px-8);
+}
+
+.article :where(ol, ul) :where(ol, ul) {
+  padding-left: var(--px-24);
+}
+
+/* Tables - Using dark mode values */
+.article table {
+  width: 100%;
+  font-size: 1em;
+}
+
+.article :where(th, td) {
+  padding: var(--px-8);
+  text-align: left;
+}
+
+.article th {
+  border-bottom: 1px solid var(--on-surface);
+}
+
+.article tr {
+  border-bottom: 1px solid var(--on-surface);
+}
+
+.article tr:last-child {
+  border-bottom: none;
+}
+
+/* Images */
+.article img {
+  max-width: 100%;
+  margin: var(--px-16) 0;
+  border-radius: var(--radius-on-surface);
+}

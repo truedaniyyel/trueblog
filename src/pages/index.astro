@@ -1,0 +1,160 @@
+---
+import { SITE, SOCIALS } from '@consts';
+import { blog, projects } from '@utils/getSortedPosts';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Card from '@components/Card.astro';
+
+const homepageBlog = blog.slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
+const homepageProjects = projects.slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
+---
+
+<BaseLayout>
+  <section class="intro">
+    <h1>
+      Hi, I'm <a
+        class="styled-link"
+        href="https://truedaniyyel.com/"
+        target="_blank"
+        rel="noopener noreferrer">Daniel Adrian</a
+      >
+    </h1>
+    <p class="section-text">
+      This is a markdown blog template built with <a
+        href="https://astro.build"
+        class="styled-link">Astro</a
+      >. You can read the <a
+        href="https://github.com/truedaniyyel/trueblog?tab=readme-ov-file#project-structure"
+        class="styled-link"
+        >documentation
+      </a> here.
+    </p>
+  </section>
+
+  <section class="latest-posts">
+    <h2 class="section-title">Latest posts</h2>
+    {
+      homepageBlog.length > 0 ? (
+        <ul class="post-container">
+          {homepageBlog.map(({ data, id, collection }) => (
+            <li class="post-item">
+              <Card {data} {id} {collection} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="nothing-here">Nothing here yet.</div>
+      )
+    }
+  </section>
+
+  <section class="latest-projects">
+    <h2 class="section-title">Recent projects</h2>
+    {
+      homepageProjects.length > 0 ? (
+        <ul class="post-container">
+          {homepageProjects.map(({ data, id, collection }) => (
+            <li class="post-item">
+              <Card {data} {id} {collection} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="nothing-here">Nothing here yet.</div>
+      )
+    }
+  </section>
+  <section class="socials">
+    <h2 class="section-title">Let's Connect</h2>
+    <p class="section-text">
+      If you want to get in touch with me about something
+    </p>
+    <ul class="socials-list">
+      {
+        SOCIALS.map((social, index) => (
+          <>
+            <li class="social-link">
+              <a
+                href={social.HREF}
+                aria-label={social.LABEL}
+                class="styled-link social-link-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {social.NAME}
+              </a>
+            </li>
+            {index !== SOCIALS.length - 1 && <li class="separator">/</li>}
+          </>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    margin-bottom: var(--px-64);
+  }
+
+  section {
+    margin-bottom: 48px;
+  }
+
+  h1 {
+    font-size: var(--px-24);
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+
+  .section-text {
+    margin-bottom: 24px;
+  }
+
+  .post-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--px-20);
+  }
+
+  .post {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--px-20) var(--px-24);
+    border: 2px solid #d4d4d8;
+    border-radius: var(--px-12);
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .post:hover {
+      background-color: #272732;
+    }
+  }
+
+  .post-header {
+    font-size: var(--px-20);
+    font-weight: 600;
+    margin-bottom: var(--px-12);
+  }
+
+  .post-description {
+    font-size: var(--px-18);
+    margin-bottom: var(--px-24);
+  }
+
+  .post-icon :global(svg) {
+    width: var(--px-12);
+  }
+
+  .socials-list {
+    display: flex;
+    gap: var(--px-4);
+  }
+</style>

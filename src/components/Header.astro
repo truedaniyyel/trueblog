@@ -1,0 +1,75 @@
+---
+
+---
+
+<header>
+  <nav>
+    <div class="logo"><a href="/">trueblog</a></div>
+    <ul>
+      <li>
+        <a class="nav-link" href="/blog">blog</a>
+      </li>
+      <li>/</li>
+      <li>
+        <a class="nav-link" href="/projects">projects</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    margin-bottom:  var(--px-64);
+    padding: var(--px-28) var(--px-16);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 999;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-inline: auto;
+    max-width: var(--width-container);
+  }
+  
+  .logo a {
+    font-weight: 550;
+    color: rgba(255, 255, 255, 0.75);
+    transition: color 0.2s ease;
+  }
+  
+  ul {
+    display: flex;
+    gap: var(--px-4);
+  }
+
+  ul li {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .nav-link {
+    text-decoration: underline;
+    transition: color 0.2s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+      .logo a:hover {
+      color: #fff
+    }
+    .nav-link:hover {
+      color: #fff 
+    }
+  }
+
+  .logo a:active {
+      color: #fff
+    }
+
+  .nav-link:active {
+    color: #fff
+  }
+</style>

@@ -1,0 +1,53 @@
+---
+import uiIcons from '@assets/uiIcons';
+---
+
+<footer>
+  <span>&copy; 2025 | trueblog</span>
+  <button id="back-to-top" class="btn">
+    Back to top
+    <Fragment set:html={uiIcons.chevron.chevronUp} />
+  </button>
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--px-40);
+    margin-inline: auto;
+    max-width: var(--width-container);
+    margin-top: var(--px-64);
+    padding-bottom: var(--px-28);
+  }
+
+  button {
+    gap: var(--px-10);
+  }
+
+  button :global(svg) {
+    width: var(--px-16);
+  }
+
+  @media (max-width: 24.688rem) {
+    footer {
+      flex-direction: column-reverse;
+    }
+  }
+</style>
+
+<script is:inline>
+  function init() {
+    document.getElementById('back-to-top')?.addEventListener('click', e => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    });
+  }
+
+  init();
+  document.addEventListener('astro:after-swap', init);
+</script>

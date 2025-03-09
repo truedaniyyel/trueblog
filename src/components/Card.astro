@@ -1,0 +1,74 @@
+---
+import uiIcons from '@assets/uiIcons';
+import { formatDate } from '@utils/formatDate';
+import type { CategoryType } from 'types';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  data: CollectionEntry<CategoryType>['data'];
+  id: string;
+  collection: CategoryType;
+}
+
+const { data, id, collection } = Astro.props;
+---
+
+<a href={`/${collection}/${id}`}>
+  <div class="post-details">
+    <h3 class="post-header truncate-2">{data.title}</h3>
+    <p class="post-description truncate-2">
+      {data.description}
+    </p>
+    <time
+      class="post-date"
+      datetime={(data.modDatetime || data.pubDatetime).toISOString()}
+    >
+      {
+        data.modDatetime
+          ? `Upd: ${formatDate(data.modDatetime)}`
+          : formatDate(data.pubDatetime)
+      }
+    </time>
+  </div>
+  <span class="post-icon">
+    <Fragment set:html={uiIcons.chevron.chevronRight} />
+  </span>
+</a>
+
+<style>
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--px-20) var(--px-24);
+    border: 2px solid var(--on-surface);
+    border-radius: var(--px-12);
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    a:hover {
+      background-color: var(--surface);
+    }
+  }
+
+  a:active {
+    background-color: var(--on-surface);
+  }
+
+  .post-header {
+    font-size: var(--px-20);
+    font-weight: 600;
+    margin-bottom: var(--px-12);
+  }
+
+  .post-description {
+    font-size: var(--px-18);
+    margin-bottom: var(--px-24);
+  }
+
+  .post-icon :global(svg) {
+    width: var(--px-12);
+  }
+</style>

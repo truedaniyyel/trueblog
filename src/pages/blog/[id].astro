@@ -1,0 +1,15 @@
+---
+import PostLayout from '@layouts/PostLayout.astro';
+import { blog } from '@utils/getSortedPosts';
+
+export async function getStaticPaths() {
+  return blog.map(post => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<PostLayout {post} />

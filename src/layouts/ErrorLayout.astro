@@ -1,0 +1,29 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  errorCode: string;
+  errorMessage: string;
+  errorDescription: string;
+}
+
+const { title, description, errorCode, errorMessage, errorDescription } =
+  Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <section>
+    <h1>{errorCode}</h1>
+    <h2>{errorMessage}</h2>
+    <p>{errorDescription}</p>
+
+    <!-- Helpful Links -->
+    <div>
+      <a>Go to homepage</a>
+    </div>
+
+    <slot />
+  </section>
+</BaseLayout>
