@@ -63,14 +63,6 @@ main {
     -webkit-text-decoration-color: currentColor;
     -moz-text-decoration-color: currentColor;
   }
-
-  .styled-link:visited:hover {
-    color: var(--article-link-visited-hover);
-  }
-
-  .styled-link:visited:focus {
-    color: var(--article-link-visited-hover);
-  }
 }
 
 @media (hover: none) {
@@ -82,12 +74,4 @@ main {
 
 .styled-link:active {
   color: var(--article-link-active);
-}
-
-.styled-link:visited {
-  color: var(--article-link-visited);
-}
-
-.styled-link:visited:active {
-  color: var(--article-link-visited-active);
 }

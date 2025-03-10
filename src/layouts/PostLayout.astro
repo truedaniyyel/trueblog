@@ -1,6 +1,8 @@
 ---
 import uiIcons from '@assets/uiIcons';
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { formatDate } from '@utils/formatDate';
+import { readingTime } from '@utils/readingTime';
 import { type CollectionEntry, render } from 'astro:content';
 
 interface Props {
@@ -18,6 +20,9 @@ const imageUrl =
 
 const ogUrl = `/${post.collection}/${post.id}.webp`;
 
+const repoUrl = post.data?.repoUrl;
+const demoUrl = post.data?.demoUrl;
+
 const postLayoutProps = {
   canonicalURL: post.data.canonicalURL,
   title: post.data.title,
@@ -29,193 +34,252 @@ const postLayoutProps = {
 ---
 
 <BaseLayout {...postLayoutProps}>
-  <button id="back-to-prev" class="btn">
+  <a href={`/${post.collection}`} id="back-to-prev" class="btn">
     <Fragment set:html={uiIcons.arrowLeft} />
     Back to {post.collection}
-  </button>
+  </a>
 
-  {
-    imageUrl && (
-      <img
-        loading="lazy"
-        decoding="async"
-        width="752"
-        height="420"
-        src={imageUrl}
-        alt={post.data.title}
-        class="post-img"
-      />
-    )
-  }
+  <header class="post-header">
+    <div class="post-details">
+      <time
+        datetime={(
+          post.data.modDatetime || post.data.pubDatetime
+        ).toISOString()}
+      >
+        {
+          post.data.modDatetime
+            ? `Upd: ${formatDate(post.data.modDatetime)}`
+            : formatDate(post.data.pubDatetime)
+        }
+      </time>
+      {
+        post.body && (
+          <>
+            <span class="divider">/</span>
+            <div class="post-reading-time">{readingTime(post.body)}</div>
+          </>
+        )
+      }
+    </div>
+    <h1 class="post-title">{post.data.title}</h1>
+    {
+      (repoUrl || demoUrl) && (
+        <div class="post-links">
+          {demoUrl && (
+            <a href={demoUrl} class="styled-link demo-link">
+              demo
+            </a>
+          )}
+          <span>/</span>
+          {repoUrl && (
+            <a href={repoUrl} class="styled-link repo-link">
+              repo
+            </a>
+          )}
+        </div>
+      )
+    }
 
-  <article>
-    <section class="article"><Content /></section>
-  </article>
-</BaseLayout>
+    {
+      imageUrl && (
+        <img
+          loading="lazy"
+          decoding="async"
+          width="752"
+          height="420"
+          src={imageUrl}
+          alt={post.data.title}
+          class="post-img"
+        />
+      )
+    }
 
-<style>
-  #back-to-prev {
-    gap: var(--px-8);
-    margin-bottom: var(--px-24);
-  }
+    <article>
+      <section class="article"><Content /></section>
+    </article>
+  </header>
 
-  #back-to-prev :global(svg) {
-    height: var(--px-16);
-  }
+  <style>
+    #back-to-prev {
+      display: inline-flex;
+      gap: var(--px-8);
+      margin-bottom: var(--px-40);
+    }
 
-  .post-img {
-    object-fit: cover;
-    border-radius: var(--radius-on-surface);
-    background-color: var(--on-surface-content);
-    transition: opacity var(--transition-base);
-  }
-</style>
+    #back-to-prev :global(svg) {
+      height: var(--px-16);
+    }
 
-<script is:inline>
-  function setupPageElements() {
-    // Back to prev
-    document
-      .getElementById('back-to-prev')
-      ?.addEventListener('click', () => window.history.back());
+    .post-details {
+      display: flex;
+      gap: var(--px-6);
+      margin-bottom: var(--px-6);
+    }
 
-    // Handle tables
-    const tables = document.querySelectorAll('.article table');
-    tables.forEach(table => {
-      // Check if table is already wrapped
-      if (table.parentElement?.classList.contains('table-wrapper')) return;
+    .post-title {
+      margin-bottom: var(--px-8);
+      font-size: clamp(
+        calc(var(--text-lg) * 1.75),
+        2.5vw + var(--text-lg),
+        calc(var(--text-lg) * 2.22222)
+      );
+      line-height: var(--leading-heading);
+      font-weight: 600;
+    }
 
-      const wrapper = document.createElement('div');
-      wrapper.className = 'table-wrapper';
-      table.parentNode?.insertBefore(wrapper, table);
-      wrapper.appendChild(table);
-    });
+    .post-links {
+      margin-bottom: var(--px-32);
+    }
 
-    // Handle code blocks
-    const codeBlocks = document.querySelectorAll('.article pre');
-    codeBlocks.forEach(codeBlock => {
-      if (codeBlock.parentElement?.classList.contains('code-block-wrapper'))
-        return;
+    .post-img {
+      object-fit: cover;
+      border-radius: var(--radius-on-surface);
+      background-color: var(--on-surface-content);
+      transition: opacity var(--transition-base);
+    }
+  </style>
 
-      // Create wrapper
-      const wrapper = document.createElement('div');
-      wrapper.className = 'code-block-wrapper';
+  <script is:inline>
+    function setupPageElements() {
+      // Handle tables
+      const tables = document.querySelectorAll('.article table');
+      tables.forEach(table => {
+        // Check if table is already wrapped
+        if (table.parentElement?.classList.contains('table-wrapper')) return;
 
-      codeBlock.setAttribute('tabindex', '0');
-
-      // Create copy button
-      const copyButton = document.createElement('button');
-      copyButton.className = 'btn copy-button';
-      copyButton.setAttribute('aria-label', 'Copy code');
-
-      const iconCopy = `<svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
-      const iconSuccess = `<svg class="success-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-
-      // Copy and success icons
-      copyButton.innerHTML = `<div class="icon-container">${iconCopy}${iconSuccess}</div>`;
-
-      // Wrap the code block
-      codeBlock.parentNode?.insertBefore(wrapper, codeBlock);
-      wrapper.appendChild(codeBlock);
-      wrapper.appendChild(copyButton);
-
-      // Copy functionality
-      let timeout;
-      copyButton.addEventListener('click', async () => {
-        if (timeout) clearTimeout(timeout);
-
-        const codeElement = codeBlock.querySelector('code');
-
-        if (!codeElement) return;
-
-        // Remove line numbers and copy only the code
-        const text = Array.from(codeElement.querySelectorAll('.line'))
-          .map(line => line.textContent?.replace(/^\d+\s*\|\s*/, '') || '')
-          .join('\n');
-
-        await navigator.clipboard.writeText(text);
-        copyButton.classList.add('success');
-
-        timeout = setTimeout(() => {
-          copyButton.classList.remove('success');
-        }, 1000);
+        const wrapper = document.createElement('div');
+        wrapper.className = 'table-wrapper';
+        table.parentNode?.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
       });
-    });
-  }
 
-  setupPageElements();
-</script>
+      // Handle code blocks
+      const codeBlocks = document.querySelectorAll('.article pre');
+      codeBlocks.forEach(codeBlock => {
+        if (codeBlock.parentElement?.classList.contains('code-block-wrapper'))
+          return;
 
-<style is:inline>
-  .table-wrapper {
-    width: 100%;
-    margin-block: var(--px-16);
-    font-size: var(--px-16);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-block: var(--px-8);
-  }
+        // Create wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
 
-  .code-block-wrapper {
-    position: relative;
-    margin-bottom: var(--px-16);
-    font-size: var(--px-16);
-  }
+        codeBlock.setAttribute('tabindex', '0');
 
-  .copy-button {
-    position: absolute;
-    top: var(--px-8);
-    right: var(--px-8);
-    width: var(--px-32);
-    height: var(--px-32);
-    padding: var(--px-4);
-    border-radius: var(--radius-on-surface);
-    background-color: var(--surface-light);
-    opacity: 0.8;
-    transition: all var(--transition-base);
-    z-index: var(--z-50);
-  }
+        // Create copy button
+        const copyButton = document.createElement('button');
+        copyButton.className = 'btn copy-button';
+        copyButton.setAttribute('aria-label', 'Copy code');
 
-  /* Copy button hover - desktop only */
-  @media (hover: hover) and (pointer: fine) {
-    .copy-button:hover {
-      opacity: 1;
-      background-color: var(--surface-light);
+        const iconCopy = `<svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+        const iconSuccess = `<svg class="success-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+        // Copy and success icons
+        copyButton.innerHTML = `<div class="icon-container">${iconCopy}${iconSuccess}</div>`;
+
+        // Wrap the code block
+        codeBlock.parentNode?.insertBefore(wrapper, codeBlock);
+        wrapper.appendChild(codeBlock);
+        wrapper.appendChild(copyButton);
+
+        // Copy functionality
+        let timeout;
+        copyButton.addEventListener('click', async () => {
+          if (timeout) clearTimeout(timeout);
+
+          const codeElement = codeBlock.querySelector('code');
+
+          if (!codeElement) return;
+
+          // Remove line numbers and copy only the code
+          const text = Array.from(codeElement.querySelectorAll('.line'))
+            .map(line => line.textContent?.replace(/^\d+\s*\|\s*/, '') || '')
+            .join('\n');
+
+          await navigator.clipboard.writeText(text);
+          copyButton.classList.add('success');
+
+          timeout = setTimeout(() => {
+            copyButton.classList.remove('success');
+          }, 1000);
+        });
+      });
     }
-  }
 
-  /* Copy button touch states */
-  @media (hover: none) {
-    /* Disable hover effects on touch */
-    .copy-button:hover {
+    setupPageElements();
+  </script>
+
+  <style is:inline>
+    .table-wrapper {
+      width: 100%;
+      margin-block: var(--px-16);
+      font-size: var(--px-16);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-block: var(--px-8);
+    }
+
+    .code-block-wrapper {
+      position: relative;
+      margin-bottom: var(--px-16);
+      font-size: var(--px-16);
+    }
+
+    .copy-button {
+      position: absolute;
+      top: var(--px-8);
+      right: var(--px-8);
+      width: var(--px-32);
+      height: var(--px-32);
+      padding: var(--px-4);
+      border-radius: var(--radius-on-surface);
+      background-color: var(--surface-light);
       opacity: 0.8;
-      background-color: var(--surface-light);
+      transition: all var(--transition-base);
+      z-index: var(--z-50);
     }
-  }
 
-  .copy-button .icon-container {
-    position: relative;
-    width: var(--px-18);
-    height: var(--px-18);
-  }
+    /* Copy button hover - desktop only */
+    @media (hover: hover) and (pointer: fine) {
+      .copy-button:hover {
+        opacity: 1;
+        background-color: var(--surface-light);
+      }
+    }
 
-  .copy-button svg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    color: var(--text-light);
-    transform: translate(-50%, -50%);
-    transition: all var(--transition-base);
-  }
+    /* Copy button touch states */
+    @media (hover: none) {
+      /* Disable hover effects on touch */
+      .copy-button:hover {
+        opacity: 0.8;
+        background-color: var(--surface-light);
+      }
+    }
 
-  .copy-button .success-icon {
-    opacity: 0;
-  }
+    .copy-button .icon-container {
+      position: relative;
+      width: var(--px-18);
+      height: var(--px-18);
+    }
 
-  .copy-button.success .copy-icon {
-    opacity: 0;
-  }
+    .copy-button svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      color: var(--text-light);
+      transform: translate(-50%, -50%);
+      transition: all var(--transition-base);
+    }
 
-  .copy-button.success .success-icon {
-    opacity: 1;
-  }
-</style>
+    .copy-button .success-icon {
+      opacity: 0;
+    }
+
+    .copy-button.success .copy-icon {
+      opacity: 0;
+    }
+
+    .copy-button.success .success-icon {
+      opacity: 1;
+    }
+  </style>
+</BaseLayout>

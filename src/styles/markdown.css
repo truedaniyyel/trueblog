@@ -153,29 +153,86 @@
 }
 
 /* Lists */
-.article :where(ul, ol) {
-  padding-left: var(--px-36);
-  margin-bottom: var(--px-20);
-  list-style-position: outside;
+.article ul,
+.article ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 2em;
+  list-style: revert;
 }
 
-.article ul {
-  list-style-type: disc;
+.article ol ol,
+.article ul ol {
+  list-style-type: lower-roman;
 }
-.article ol {
+
+.article ul ul ol,
+.article ul ol ol,
+.article ol ul ol,
+.article ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.article ul.no-list,
+.article ol.no-list {
+  padding: 0;
+  list-style-type: none;
+}
+
+.article ol[type='a s'] {
+  list-style-type: lower-alpha;
+}
+
+.article ol[type='A s'] {
+  list-style-type: upper-alpha;
+}
+
+.article ol[type='i s'] {
+  list-style-type: lower-roman;
+}
+
+.article ol[type='I s'] {
+  list-style-type: upper-roman;
+}
+
+.article ol[type='1'] {
   list-style-type: decimal;
 }
 
-.article li {
-  margin-bottom: var(--px-12);
+.article div > ol:not([type]) {
+  list-style-type: decimal;
 }
 
-.article :where(ul, ol) p {
-  margin-bottom: var(--px-8);
+.article ul ul,
+.article ul ol,
+.article ol ol,
+.article ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.article :where(ol, ul) :where(ol, ul) {
-  padding-left: var(--px-24);
+.article li > p {
+  margin-top: 1rem;
+}
+
+.article li + li {
+  margin-top: 0.25em;
+}
+
+.article ul:dir(rtl) .task-list-item-checkbox {
+  margin: 0 -1.6em 0.25em 0.2em;
+}
+
+.article ol:dir(rtl) .task-list-item-checkbox {
+  margin: 0 -1.6em 0.25em 0.2em;
+}
+
+.article .task-list-item {
+  list-style-type: none;
+}
+
+.article .task-list-item + .task-list-item {
+  margin-top: 0.25rem;
 }
 
 /* Tables - Using dark mode values */
