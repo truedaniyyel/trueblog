@@ -1,4 +1,4 @@
-# trueblog - Static Blog Template with Astro
+# trueblog
 
 <div align="center">
 
@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Last Updated](https://img.shields.io/badge/Last%20Updated-2025--03--05-blue.svg)](https://github.com/truedaniyyel/trueblog)
 
-A modern, secure, and SEO-optimized markdown blog template built with Astro.
+Static blog template built with Astro.
 
 [Demo](https://example.com) · [Documentation](#getting-started) ·
 [Report Bug](https://github.com/truedaniyyel/trueblog/issues) ·
