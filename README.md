@@ -8,7 +8,7 @@
 
 Static blog template built with Astro.
 
-[Demo](https://example.com) · [Documentation](#getting-started) ·
+[Demo](https://trueblog.pages.dev) · [Documentation](#getting-started) ·
 [Report Bug](https://github.com/truedaniyyel/trueblog/issues) ·
 [Request Feature](https://github.com/truedaniyyel/trueblog/issues)
 
