@@ -14,7 +14,7 @@ contains essential settings that define your blog's identity and behavior.
 
 ### Core Configuration
 
-```typescript title="src/consts.ts"
+```typescript title='src/consts.ts'
 export const SITE: Site = {
   TITLE: 'Name of your blog',
   DESCRIPTION: 'Description for your blog',
@@ -58,7 +58,7 @@ export const SITE: Site = {
 
 Configure your social media links in the same `src/consts.ts` file:
 
-```typescript name=src/consts.ts
+```typescript title='src/consts.ts'
 export const SOCIALS: Socials = [
   {
     NAME: 'Facebook',
@@ -95,7 +95,7 @@ The OG image templates are located in `src/utils/og-images/templates/`:
 
 Example template modification:
 
-```typescript name=src/utils/og-images/templates/postTemplate.ts
+```typescript title='src/utils/og-images/templates/postTemplate.ts'
 const markup = html(`
   // Your custom HTML template here
 `);
@@ -105,7 +105,7 @@ const markup = html(`
 
 Customize image generation settings in `src/utils/og-images/config.ts`:
 
-```typescript name=src/utils/og-images/config.ts
+```typescript title='src/utils/og-images/config.ts'
 import { readFileSync } from 'fs';
 import type { ImageConfig, SvgConfig } from './types';
 import type { Font } from 'satori';
@@ -186,7 +186,7 @@ trueblog comes with pre-configured security headers optimized for
 
 The main security headers are defined in `public/_headers`:
 
-```text name=public/_headers
+```text title='public/_headers'
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
@@ -215,7 +215,7 @@ The system works as follows:
 
 Here's the script that handles the CSP header generation:
 
-```javascript name=scripts/generate-csp-header.mjs
+```javascript title='scripts/generate-csp-header.mjs'
 import fs from 'fs/promises';
 import path from 'path';
 import {
@@ -266,7 +266,7 @@ generateCSPHeader();
 
 In the CSP header, you will find the directive:
 
-```javascript name=scripts/generate-csp-header.mjs
+```javascript title='scripts/generate-csp-header.mjs'
 img-src 'self' https://example.com;
 ```
 
@@ -282,13 +282,37 @@ CSP. By default, you can import fonts into the public/fonts folder and reference
 them locally. However, if you are loading fonts from an external provider (e.g.,
 Google Fonts), you need to update your CSP like this:
 
-```javascript name=scripts/generate-csp-header.mjs
+```javascript title='scripts/generate-csp-header.mjs'
 font-src 'self' https://example.com;
 ```
 
 Replace https://example.com with the actual URL of your font provider. This
 ensures that only the specified sources can load fonts, improving security while
 allowing external font usage.
+
+## Syntax Highlighting
+
+For syntax highlighting,
+[Expressive Code](https://github.com/expressive-code/expressive-code) is used.  
+Its configuration is defined in `ec.config.mjs`.
+
+```mjs title='ec.config.mjs'
+import { defineEcConfig } from 'astro-expressive-code';
+import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
+
+export default defineEcConfig({
+  plugins: [pluginLineNumbers()],
+  themes: ['andromeeda'],
+
+  styleOverrides: {
+    // You can also override styles
+    borderRadius: '0.5rem',
+    uiFontFamily: 'JetBrains Mono',
+    codeFontFamily: 'JetBrains Mono',
+    codeFontSize: '1rem',
+  },
+});
+```
 
 ## Post Metadata Reference
 

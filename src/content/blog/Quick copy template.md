@@ -4,7 +4,7 @@ pubDatetime: 2025-03-10
 description: '...'
 draft: true
 author: '...'
-# modDatetime: 2025-03-04 16:06:19
+# modDatetime: 2025-03-04
 # image: "./images/post.png"
 # demoUrl: ""
 # repoUrl: ""
