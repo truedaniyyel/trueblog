@@ -2,9 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import {
   inlineScriptHashes,
-  inlineStyleHashes,
   extScriptHashes,
-  extStyleHashes,
 } from '../src/generated/sriHashes.mjs';
 
 const headersPath = path.join(process.cwd(), 'dist', '_headers');
@@ -14,25 +12,8 @@ async function generateCSPHeader() {
     // Combine all script hashes
     const scriptHashes = new Set([...inlineScriptHashes, ...extScriptHashes]);
 
-    // Combine all style hashes
-    const styleHashes = new Set([...inlineStyleHashes, ...extStyleHashes]);
-
-    // Generate CSP header for general paths
+    // Generate CSP header
     const cspHeader =
-      `Content-Security-Policy: default-src 'self'; object-src 'self'; script-src 'self' ${Array.from(
-        scriptHashes
-      )
-        .map(hash => `'${hash}'`)
-        .join(' ')}; connect-src 'self'; style-src 'self' ${Array.from(
-        styleHashes
-      )
-        .map(hash => `'${hash}'`)
-        .join(
-          ' '
-        )}; base-uri 'self'; img-src 'self' https://ik.imagekit.io/truedaniyyel/; frame-ancestors 'none'; worker-src 'self'; manifest-src 'none'; form-action 'self';`.trim();
-
-    // Generate CSP header for /blog/* and /projects/* paths
-    const cspHeaderWithUnsafeInline =
       `Content-Security-Policy: default-src 'self'; object-src 'self'; script-src 'self' ${Array.from(
         scriptHashes
       )
@@ -44,15 +25,7 @@ async function generateCSPHeader() {
     // Read existing _headers file
     let headersContent = await fs.readFile(headersPath, 'utf-8');
 
-    headersContent += `
-          /blog/*
-    ${cspHeaderWithUnsafeInline}
-  
-  /projects/*
-    ${cspHeaderWithUnsafeInline}
-
-  ${cspHeader}
-  `;
+    headersContent += '\n  ' + cspHeader;
 
     // Write updated content back to _headers file
     await fs.writeFile(headersPath, headersContent);
