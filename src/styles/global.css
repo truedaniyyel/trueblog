@@ -80,3 +80,11 @@ main {
   display: flex;
   gap: var(--px-4);
 }
+
+.table-wrapper {
+  width: 100%;
+  margin-bottom: var(--px-24);
+  font-size: var(--px-16);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

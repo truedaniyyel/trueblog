@@ -14,7 +14,7 @@ contains essential settings that define your blog's identity and behavior.
 
 ### Core Configuration
 
-```typescript name=src/consts.ts
+```typescript title="src/consts.ts"
 export const SITE: Site = {
   TITLE: 'Name of your blog',
   DESCRIPTION: 'Description for your blog',

@@ -95,50 +95,6 @@
   color: var(--article-link-visited-active);
 }
 
-/* Code Blocks */
-.article code {
-  font-size: 1em;
-  padding: 0 var(--px-4);
-}
-
-.article pre {
-  border-radius: var(--radius-on-surface);
-  padding: var(--px-16);
-  margin-bottom: var(--px-16);
-  overflow-x: auto !important;
-}
-
-/* Code Line Numbers */
-.article code {
-  counter-reset: line;
-  padding-left: 0;
-}
-
-.article span.line {
-  font-size: 1em !important;
-  line-height: normal;
-  font-family: var(--code-font) !important;
-}
-
-.article span.line:before {
-  content: counter(line);
-  counter-increment: line;
-  display: inline-block;
-  width: 1rem;
-  margin: 0 1.5rem 0 0.35rem;
-  color: rgba(255, 255, 255, 0.45);
-  direction: rtl;
-}
-
-.article span.line:last-child:is(:empty, :has(> span:empty:only-child)) {
-  display: none;
-}
-
-/* Code Blocks - Dark mode background for code */
-/* .article :where(.astro-code, .astro-code span) {
-  background-color: #24292e !important;
-} */
-
 /* Blockquotes - Using dark mode values */
 .article blockquote {
   margin: var(--px-16) 0;
