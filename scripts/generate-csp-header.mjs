@@ -20,7 +20,7 @@ async function generateCSPHeader() {
         .map(hash => `'${hash}'`)
         .join(
           ' '
-        )}; connect-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'self'; img-src 'self' https://ik.imagekit.io/truedaniyyel/; frame-ancestors 'none'; worker-src 'self'; manifest-src 'none'; form-action 'self';`.trim();
+        )}; connect-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'self'; img-src 'self' https://ik.imagekit.io/truedaniyyel/ data:; frame-ancestors 'none'; worker-src 'self'; manifest-src 'none'; form-action 'self';`.trim();
 
     // Read existing _headers file
     let headersContent = await fs.readFile(headersPath, 'utf-8');
