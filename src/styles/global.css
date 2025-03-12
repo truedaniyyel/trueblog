@@ -88,3 +88,7 @@ main {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
+
+.expressive-code {
+  margin-bottom: var(--px-20);
+}
