@@ -45,13 +45,13 @@ async function generateCSPHeader() {
     let headersContent = await fs.readFile(headersPath, 'utf-8');
 
     headersContent += `
-  ${cspHeader}
-  
-  /blog/*
+          /blog/*
     ${cspHeaderWithUnsafeInline}
   
   /projects/*
     ${cspHeaderWithUnsafeInline}
+
+  ${cspHeader}
   `;
 
     // Write updated content back to _headers file
