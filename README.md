@@ -4,7 +4,6 @@
 
 [![Built with Astro](https://img.shields.io/badge/Built%20with-Astro-7F54FF)](https://astro.build)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-[![Last Updated](https://img.shields.io/badge/Last%20Updated-2025--03--05-blue.svg)](https://github.com/truedaniyyel/trueblog)
 
 Static blog template built with Astro.
 
@@ -16,19 +15,17 @@ Static blog template built with Astro.
 
 ## Features
 
-- **Built with [Astro](https://astro.build)**: Leverages Astro's static site
-  generation capabilities
-- **Comprehensive SEO Setup**:
+- **Built with [Astro](https://astro.build)**
+- **SEO Setup**:
   - Dynamic OG image generation at build time using Satori and Sharp
   - Automated meta tags management
   - Built-in RSS feed generation (`rss.xml`)
   - Automatic sitemap generation
   - Robots.txt configuration
-- **Enhanced Security**:
+- **Security**:
   - Integrated Content Security Policy (CSP) headers
   - Dynamic security key generation using astro-shield
   - Custom script for SRI (`scripts/generate-csp-header.mjs`)
-  - Protection against common web vulnerabilities
 
 ## Table of Contents
 
@@ -115,7 +112,9 @@ export const SITE: Site = {
   TITLE: 'Name of your blog',
   DESCRIPTION: 'Description for your blog',
   AUTHOR: 'Name of the author',
-  CANONICAL_URL: isDev ? 'http://localhost:4321' : 'https://example.com',
+  CANONICAL_URL: import.meta.env.DEV
+    ? 'http://localhost:4321'
+    : 'https://example.com',
   LOCALE: 'en',
   CATEGORIES: ['blog', 'projects'],
   OG_IMAGE: '/og-image.webp',
@@ -447,12 +446,11 @@ After configuring these basic settings, you can:
 
 #### Cloudflare
 
-Configuration works out of the box with Cloudflare - no additional setup
-required.
+Configuration works out of the box with Cloudflare.
 
 #### Other Hosting Platforms
 
-For other hosting platforms, minor adjustments may be needed:
+For other hosting platforms, minor adjustments with CSP and SRI may be needed:
 
 - **Vercel**: Delete the `scripts` folder and follow the
   [Vercel integration guide](https://astro-shield.kindspells.dev/guides/hosting-integrations/vercel/)

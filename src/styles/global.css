@@ -75,3 +75,8 @@ main {
 .styled-link:active {
   color: var(--article-link-active);
 }
+
+.socials-list {
+  display: flex;
+  gap: var(--px-4);
+}

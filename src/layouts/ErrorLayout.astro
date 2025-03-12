@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { SOCIALS } from '@consts';
 
 interface Props {
   title: string;
@@ -14,16 +15,104 @@ const { title, description, errorCode, errorMessage, errorDescription } =
 ---
 
 <BaseLayout title={title} description={description}>
-  <section>
+  <section class="error-container">
     <h1>{errorCode}</h1>
     <h2>{errorMessage}</h2>
-    <p>{errorDescription}</p>
+    <p class="error-description">{errorDescription}</p>
 
     <!-- Helpful Links -->
-    <div>
-      <a>Go to homepage</a>
+    <div class="helpful-links">
+      <a class="btn primary-btn back-home-btn" href="/">Go to homepage</a>
+
+      <p class="socials-list-title">Contact me</p>
+      <ul class="socials-list">
+        {
+          SOCIALS.map((social, index) => (
+            <>
+              <li class="social-link">
+                <a
+                  href={social.HREF}
+                  aria-label={social.LABEL}
+                  class="styled-link social-link-icon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {social.NAME}
+                </a>
+              </li>
+              {index !== SOCIALS.length - 1 && <li class="separator">/</li>}
+            </>
+          ))
+        }
+      </ul>
     </div>
 
     <slot />
   </section>
 </BaseLayout>
+
+<style>
+  body {
+    margin: 0;
+  }
+
+  main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--px-40);
+    text-align: center;
+    background-color: var(--surface);
+    border-radius: var(--radius-surface);
+  }
+
+  .error-container h1 {
+    font-size: clamp(var(--text-5xl), 10vw, var(--text-6xl));
+    font-weight: 500;
+    margin-bottom: var(--px-16);
+  }
+
+  .error-container h2 {
+    font-size: clamp(var(--text-2xl), 4.5vw, var(--text-3xl));
+    margin-bottom: var(--px-16);
+  }
+
+  .error-description {
+    font-size: var(--text-lg);
+    max-width: var(--width-error);
+  }
+
+  .helpful-links {
+    margin-top: var(--px-32);
+  }
+
+  .back-home-btn {
+    min-width: 100%;
+    padding: var(--px-12);
+    margin-bottom: var(--px-48);
+    border-radius: var(--radius-on-surface);
+  }
+
+  .socials-list-title {
+    margin-bottom: var(--px-8);
+  }
+
+  @media (max-width: 34.25rem) {
+    .error-container {
+      padding: var(--px-32);
+    }
+  }
+
+  @media (max-width: 24.125rem) {
+    .error-container {
+      padding: var(--px-24);
+    }
+  }
+</style>

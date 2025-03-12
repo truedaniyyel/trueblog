@@ -36,9 +36,21 @@
   --font-primary: 'Inter';
   --font-mono: 'JetBrains Mono';
 
-  --width-container: 724px;
+  --width-container: 45.25rem;
+  --width-error: 30rem;
 
+  /* Font sizes */
+  --text-xs: 0.875rem; /* 14px */
+  --text-sm: 0.938rem; /* 15px */
+  --text-base: 1rem; /* 16px */
   --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.375rem; /* 22px */
+  --text-3xl: 1.5rem; /* 24px */
+  --text-4xl: 2rem; /* 32px */
+  --text-5xl: 2.5rem; /* 40px */
+  --text-6xl: 3.5rem; /* 56px */
+
   --leading-body: 1.5;
   --leading-heading: 1.4;
 

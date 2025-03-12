@@ -1,19 +1,19 @@
 import type { Site, Socials } from './types';
 import { minutesToMilliseconds } from './utils/minutesToMilliseconds';
 
-const isDev = import.meta.env.DEV;
-
 export const SITE: Site = {
-  TITLE: 'My Amazing Blog',
-  DESCRIPTION: 'Welcome to my amazing blog.',
-  AUTHOR: 'John Doe',
-  CANONICAL_URL: isDev ? 'http://localhost:4321' : 'https://trueblog.pages.dev',
+  TITLE: 'trueblog',
+  DESCRIPTION: 'Welcome to trueblog.',
+  AUTHOR: 'Daniel Adrian',
+  CANONICAL_URL: import.meta.env.DEV
+    ? 'http://localhost:4321'
+    : 'https://trueblog.pages.dev',
   LOCALE: 'en',
   CATEGORIES: ['blog', 'projects'],
   OG_IMAGE: '/og-image.webp',
 
   TWITTER: {
-    CREATOR: '@john_doe',
+    CREATOR: '@truedaniyyel',
     CARD: 'summary_large_image',
   },
 
@@ -26,17 +26,17 @@ export const SOCIALS: Socials = [
   {
     NAME: 'facebook',
     LABEL: `${SITE.AUTHOR} on Facebook`,
-    HREF: 'https://www.facebook.com/',
+    HREF: 'https://www.facebook.com/truedaniyyel',
   },
   {
     NAME: 'linkedin',
     LABEL: `${SITE.AUTHOR} on LinkedIn`,
-    HREF: 'https://www.linkedin.com/in/',
+    HREF: 'https://www.linkedin.com/in/truedaniyyel',
   },
   {
     NAME: 'github',
     LABEL: `${SITE.AUTHOR} on Github`,
-    HREF: 'https://www.github.com/',
+    HREF: 'https://github.com/truedaniyyel',
   },
   {
     NAME: 'rss',

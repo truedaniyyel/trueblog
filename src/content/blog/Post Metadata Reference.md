@@ -4,8 +4,6 @@ pubDatetime: 2025-03-10
 description: 'A simple example of a post metadata.'
 ---
 
-# Post Metadata Reference
-
 ## Basic Fields
 
 You can find frontmatter structure in `src/content.config.ts`

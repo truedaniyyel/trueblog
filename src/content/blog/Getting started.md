@@ -4,8 +4,6 @@ pubDatetime: 2025-03-08
 description: 'The basic configuration of trueblog is pretty simple.'
 ---
 
-# Getting Started
-
 This guide will walk you through the basic configuration and customization of
 your trueblog installation.
 
@@ -21,7 +19,9 @@ export const SITE: Site = {
   TITLE: 'Name of your blog',
   DESCRIPTION: 'Description for your blog',
   AUTHOR: 'Name of the author',
-  CANONICAL_URL: isDev ? 'http://localhost:4321' : 'https://example.com',
+  CANONICAL_URL: import.meta.env.DEV
+    ? 'http://localhost:4321'
+    : 'https://example.com',
   LOCALE: 'en',
   CATEGORIES: ['blog', 'projects'],
   OG_IMAGE: '/og-image.webp',
@@ -353,12 +353,11 @@ After configuring these basic settings, you can:
 
 ### Cloudflare
 
-Configuration works out of the box with Cloudflare - no additional setup
-required.
+Configuration works out of the box with Cloudflare.
 
 ### Other Hosting Platforms
 
-For other hosting platforms, minor adjustments may be needed:
+For other hosting platforms, minor adjustments with CSP and SRI may be needed:
 
 - **Vercel**: Delete the `scripts` folder and follow the
   [Vercel integration guide](https://astro-shield.kindspells.dev/guides/hosting-integrations/vercel/)

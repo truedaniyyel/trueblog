@@ -206,6 +206,7 @@ const postLayoutProps = {
     }
 
     setupPageElements();
+    document.addEventListener('astro:after-swap', setupPageElements);
   </script>
 
   <style is:inline>

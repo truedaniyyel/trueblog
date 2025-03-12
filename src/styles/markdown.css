@@ -157,8 +157,15 @@
 .article ol {
   margin-top: 0;
   margin-bottom: 0;
-  padding-left: 2em;
+  padding-left: var(--px-36);
   list-style: revert;
+}
+
+@media (max-width: 24.125rem) {
+  .article ul,
+  .article ol {
+    padding-left: var(--px-32);
+  }
 }
 
 .article ol ol,
@@ -171,12 +178,6 @@
 .article ol ul ol,
 .article ol ol ol {
   list-style-type: lower-alpha;
-}
-
-.article ul.no-list,
-.article ol.no-list {
-  padding: 0;
-  list-style-type: none;
 }
 
 .article ol[type='a s'] {
@@ -207,32 +208,23 @@
 .article ul ol,
 .article ol ol,
 .article ol ul {
-  margin-top: 0;
+  padding-left: var(--px-24);
+  margin-top: var(--px-8);
   margin-bottom: 0;
+}
+
+/* Updated spacing between list items to 12px */
+.article li + li {
+  margin-top: var(--px-12);
 }
 
 .article li > p {
   margin-top: 1rem;
+  margin-bottom: 0;
 }
 
-.article li + li {
-  margin-top: 0.25em;
-}
-
-.article ul:dir(rtl) .task-list-item-checkbox {
-  margin: 0 -1.6em 0.25em 0.2em;
-}
-
-.article ol:dir(rtl) .task-list-item-checkbox {
-  margin: 0 -1.6em 0.25em 0.2em;
-}
-
-.article .task-list-item {
-  list-style-type: none;
-}
-
-.article .task-list-item + .task-list-item {
-  margin-top: 0.25rem;
+.article li:last-child {
+  margin-bottom: var(--px-20);
 }
 
 /* Tables - Using dark mode values */
