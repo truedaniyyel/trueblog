@@ -3,6 +3,8 @@ import path from 'path';
 import {
   inlineScriptHashes,
   inlineStyleHashes,
+  extScriptHashes,
+  extStyleHashes,
 } from '../src/generated/sriHashes.mjs';
 
 const headersPath = path.join(process.cwd(), 'dist', '_headers');
@@ -10,10 +12,10 @@ const headersPath = path.join(process.cwd(), 'dist', '_headers');
 async function generateCSPHeader() {
   try {
     // Combine all script hashes
-    const scriptHashes = new Set([...inlineScriptHashes]);
+    const scriptHashes = new Set([...inlineScriptHashes, ...extScriptHashes]);
 
     // Combine all style hashes
-    const styleHashes = new Set([...inlineStyleHashes]);
+    const styleHashes = new Set([...inlineStyleHashes, ...extStyleHashes]);
 
     // Generate CSP header
     const cspHeader =
